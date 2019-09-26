@@ -5,7 +5,7 @@ Shared JS library for Cliengo hours configuration.
 ## Installation
 
 ```bash
-npm install https://github.com/Cliengo/hours-configuration-js#semver:~1.0.0
+npm install https://github.com/Cliengo/hours-configuration-js#semver:~1.1.0
 ```
 
 ## Usage
