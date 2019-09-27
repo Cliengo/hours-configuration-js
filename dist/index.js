@@ -17,10 +17,9 @@ var isWebsiteClosedNow = function isWebsiteClosedNow(businessHoursConfig, channe
         business_hours = businessHoursConfig.business_hours;
 
     if (enabled_channels && enabled_channels[channel] === true && business_hours) {
-      var _weekTimestamp = _weekTimestamp(now);
-
+      var timestamp = weekTimestamp(now);
       return !business_hours.some(function (entry) {
-        return entry.start <= _weekTimestamp && _weekTimestamp <= entry.end;
+        return entry.start <= timestamp && timestamp <= entry.end;
       });
     }
   } // Return as always open
@@ -39,12 +38,12 @@ var isWebsiteClosedNow = function isWebsiteClosedNow(businessHoursConfig, channe
 
 var precedingMondayMillis = function precedingMondayMillis(now) {
   var dayOfWeek = now.getDay();
-  var previousMonday;
+  var previousMonday = new Date();
 
   if (dayOfWeek >= 1) {
-    previousMonday = new Date().setDate(now.getDate() - dayOfWeek + 1);
+    previousMonday.setDate(now.getDate() - dayOfWeek + 1);
   } else {
-    previousMonday = new Date().setDate(now.getDate() - 6);
+    previousMonday.setDate(now.getDate() - 6);
   } // Set to start of day
 
 
