@@ -28,26 +28,21 @@ var isWebsiteClosedNow = function isWebsiteClosedNow(businessHoursConfig, channe
   return false;
 };
 /**
- * Get the Monday preceding the given date at midnight (if now is a Monday, just to back to midnight).
+ * Get the start of week for the given date, ie. Monday at midnight.
  *
  * @param now Reference time.
- * @return {number} UNIX timestamp of the preceding Monday, <b>in milliseconds</b>.
- * @see <a href="https://stackoverflow.com/a/35088292">StackOverflow inspiration</a>
+ * @return {Date} Date object representing the start of week.
+ * @see <a href="https://stackoverflow.com/a/13682065">StackOverflow inspiration</a>
  */
 
 
-var precedingMondayMillis = function precedingMondayMillis(now) {
-  var dayOfWeek = now.getDay();
-  var previousMonday = new Date();
+var startOfWeek = function startOfWeek(now) {
+  var result = new Date(now); // set to Monday of this week
 
-  if (dayOfWeek >= 1) {
-    previousMonday.setDate(now.getDate() - dayOfWeek + 1);
-  } else {
-    previousMonday.setDate(now.getDate() - 6);
-  } // Set to start of day
+  result.setDate(now.getDate() - (now.getDay() + 6) % 7); // Set to midnight
 
-
-  return previousMonday.setHours(0, 0, 0, 0);
+  result.setHours(0, 0, 0, 0);
+  return result;
 };
 /**
  * Get the number of seconds between the Monday immediately preceding the given time (at midnight) and the given time.
@@ -58,8 +53,8 @@ var precedingMondayMillis = function precedingMondayMillis(now) {
 
 
 var weekTimestamp = function weekTimestamp(now) {
-  // Get diff in seconds from previous Monday
-  return (now.getTime() - precedingMondayMillis(now)) / 1000;
+  // Get diff in seconds from start of week
+  return (now.getTime() - startOfWeek(now).getTime()) / 1000;
 };
 
 module.exports = {
