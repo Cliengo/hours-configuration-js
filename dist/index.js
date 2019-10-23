@@ -16,7 +16,7 @@ var isWebsiteClosedNow = function isWebsiteClosedNow(businessHoursConfig, channe
     var enabled_channels = businessHoursConfig.enabled_channels,
         business_hours = businessHoursConfig.business_hours;
 
-    if (enabled_channels && enabled_channels[channel] === true && business_hours) {
+    if (enabled_channels && enabled_channels[channel] === true && business_hours && business_hours.length) {
       var timestamp = weekTimestamp(now);
       return !business_hours.some(function (entry) {
         return entry.start <= timestamp && timestamp <= entry.end;
