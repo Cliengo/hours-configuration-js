@@ -131,4 +131,11 @@ describe('isWebsiteClosedNow', () => {
     expect(HoursConfig.isWebsiteClosedNow(CONFIG, CHATBOT, new Date(2019, 9, 7, 12))).toBe(false)
     CONFIG.enabled_channels.CHATBOT = true
   })
+
+  test('returns false for empty business hours', () => {
+    const oldBusinessHours = CONFIG.business_hours
+    CONFIG.business_hours = []
+    expect(HoursConfig.isWebsiteClosedNow(CONFIG, CHATBOT, new Date(2019, 9, 7, 12))).toBe(false)
+    CONFIG.business_hours = oldBusinessHours
+  })
 })
