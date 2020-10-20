@@ -15,6 +15,15 @@ var isWebsiteClosedNow = function isWebsiteClosedNow(businessHoursConfig, channe
   if (businessHoursConfig) {
     var enabled_channels = businessHoursConfig.enabled_channels,
         business_hours = businessHoursConfig.business_hours;
+    var time_zone = business_hours.length > 0 ? business_hours[business_hours.length - 1].timezone : '';
+
+    if (!!time_zone) {
+      var time_zone_offset = now.getTimezoneOffset() / 60;
+      var time_zone_offset_positive = now.toString().includes('GMT+');
+      var time_zone_format = parseInt(time_zone.split(':')[0]);
+      var time_zone_join = time_zone_offset_positive ? time_zone_format - time_zone_offset : time_zone_format + time_zone_offset;
+      now.setTime(now.getTime() + time_zone_join * 60 * 60 * 1000);
+    }
 
     if (enabled_channels && enabled_channels[channel] === true && business_hours && business_hours.length) {
       var timestamp = weekTimestamp(now);
