@@ -15,7 +15,7 @@ var isWebsiteClosedNow = function isWebsiteClosedNow(businessHoursConfig, channe
   if (businessHoursConfig) {
     var enabled_channels = businessHoursConfig.enabled_channels,
         business_hours = businessHoursConfig.business_hours;
-    var time_zone = business_hours.length > 0 ? business_hours[business_hours.length - 1].timezone : '';
+    var time_zone = businessHoursConfig.time_zone ? businessHoursConfig.time_zone : '';
 
     if (!!time_zone) {
       var time_zone_offset = now.getTimezoneOffset() / 60;
